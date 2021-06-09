@@ -11,7 +11,7 @@ get_template() and optionally from_string().
 import tempfile
 
 from django import get_version
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.templatetags.static import static
 from django.template import TemplateDoesNotExist, TemplateSyntaxError
 from django.template.backends.base import BaseEngine
 from django.template.backends.utils import (
@@ -40,6 +40,7 @@ class MakoEngine(object):
         # Just to get a dotted module path as an/a attribute/class
         Environment = import_string(environment)
         self.context_processors = options.pop('context_processors', [])
+        options.pop('loaders') # New line 43
         self.lookup = Environment(**options)
 
     def get_template(self, name):
